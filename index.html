@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parkinc.</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <header>
+            <div class="logo">
+                <a href="index.html"><img src="img/logo.png"></a>
+            </div>
+
+            <div class="menu">
+                <ul>
+                    <li class="btn"><a href="about-us.html">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        About Us
+                    </a></li>
+                </ul>
+            </div>
+        </header>
+        <div class="home">
+            <div class="container">
+                <div class="person">
+                    <span class="person-overlay"></span>
+                    <p class="small-intro">We offer parking information and other services across all of Sofia</p>
+                </div>
+                <div class="home-text">
+                    <h6 class="student">Welcome to</h6>
+                    <h1 class="name">Parkinc</h1>
+                </div>
+                <div class="python-script">
+                    <ul>
+                        <li class="btn"><a href="project.html">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            Look for parking
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="sci">
+            <ul> 
+              <li>
+                <a href="#">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span class="fa fa-facebook"></span>
+                </a> 
+              </li>
+              <li>
+                <a href="#">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span class="fa fa-twitter"></span>
+                </a> 
+              </li>
+              <li>
+                <a href="#">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span class="fa fa-instagram"></span>
+                </a> 
+              </li>
+              <li>
+                <a href="#">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span class="fa fa-linkedin"></span>
+                </a> 
+              </li>
+            </ul>  
+          </div> 
+    </div>
+
+    <!-- JQUERY LINK -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- LETTERING JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lettering.js/0.7.0/jquery.lettering.min.js"></script>
+    <!-- ANIME JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- SOCKET IO -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.2/socket.io.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".name, .student, .small-intro").lettering();
+
+            // IMAGES OVERLAY EFFECT
+            anime({
+                targets: '.home .person-overlay',
+                translateX: 1100,
+                delay: 1000,
+                duration: 1500,
+                easing: 'easeInSine'
+            })
+            anime({
+                targets: '.home .person img',
+                opacity: 1,
+                delay: 1500,
+                duration: 1500,
+                easing: 'easeInSine'
+            })
+
+            // STUDENT
+            anime({
+                targets: '.student span',
+                opacity: 1,
+                duration: 1500,
+                easing: 'easeInSine',
+                delay: anime.stagger(100, {start: 3000})
+            })
+
+            // NAME - FADE IN
+            anime({
+                targets: '.name span',
+                opacity: 1,
+                duration: 3000,
+                easing: 'easeInSine',
+                delay: anime.stagger(100, {start: 4500})
+            })
+
+            // NAME - UP AND DOWN
+            anime({
+                targets: '.name .char2, .name .char4, .name .char6',
+                keyframes: [
+                    {translateY: 100, duration: 1500}
+                ],
+                easing: 'easeInOutExpo',
+                delay: 8000,
+            })
+            anime({
+                targets: '.name .char3, .name .char5, .name .char7',
+                keyframes: [
+                    {translateY: -100, duration: 1500}
+                ],
+                easing: 'easeInOutExpo',
+                delay: 8000,
+            })
+
+            // LOGO
+            anime({
+                targets: '.logo',
+                opacity: 1,
+                duration: 3000,
+                delay: 9500
+            })
+
+            // MENU
+            anime({
+                targets: '.menu li, .sci a, .python-script ul li.btn a',
+                opacity: 1,
+                duration: 3000,
+                delay: anime.stagger(150, {start: 10500})
+            })
+
+            // INTRO
+            anime({
+                targets: '.small-intro span',
+                opacity: 1,
+                duration: 1000,
+                easing: 'easeInSine',
+                delay: anime.stagger(50, {start: 11000}) 
+            })
+
+            const socket = io("http://10.252.156.2:5000");
+
+            socket.on("connect", () => {
+                // either with send()
+                socket.send("Hello!");
+
+                // or with emit() and custom event names
+                socket.emit("salutations", "Hello!", { "mr": "john" }, Uint8Array.from([1, 2, 3, 4]));
+            });
+
+            // handle the event sent with socket.send()
+            socket.on("message", data => {
+                console.log(data);
+            });
+        })
+    </script>
+
+</body>
+
+</html>
